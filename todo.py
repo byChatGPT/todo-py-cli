@@ -1,8 +1,25 @@
-tasks = []
+import os
+
+# Define the filename to store tasks
+filename = "tasks.txt"
+
+# Check if the file exists, if not create an empty file
+if not os.path.isfile(filename):
+    open(filename, 'a').close()
+
+# Load tasks from file
+with open(filename, 'r') as f:
+    tasks = f.read().splitlines()
+
+def save_tasks():
+    # Save tasks to file
+    with open(filename, 'w') as f:
+        f.write('\n'.join(tasks))
 
 def add_task():
     task = input("Enter task: ")
     tasks.append(task)
+    save_tasks()
     print("Task added successfully!\n")
 
 def view_tasks():
@@ -21,6 +38,7 @@ def complete_task():
         print("Invalid task number!\n")
     else:
         task = tasks.pop(index-1)
+        save_tasks()
         print(f"{task} completed successfully!\n")
 
 while True:
